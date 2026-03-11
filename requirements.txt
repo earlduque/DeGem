@@ -1,0 +1,3 @@
+simple-lama-inpainting
+watchdog
+Pillow
