@@ -15,6 +15,7 @@ from PIL import Image, ImageDraw
 
 INPUT_DIR = Path("input")
 OUTPUT_DIR = Path("output")
+PROCESSED_DIR = Path("processed")
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 
 # Gemini watermark specs (from Google's implementation):
@@ -103,9 +104,12 @@ def batch_mode():
     success = 0
     for img_path in sorted(images):
         if process_image(img_path, lama):
+            img_path.rename(PROCESSED_DIR / img_path.name)
             success += 1
 
     print(f"\nDone. {success}/{len(images)} images saved to {OUTPUT_DIR}/")
+    if success:
+        print(f"Originals moved to {PROCESSED_DIR}/")
 
 
 def watch_mode():
@@ -131,7 +135,8 @@ def watch_mode():
                 return
             # Brief wait to ensure file is fully written before opening
             time.sleep(0.5)
-            process_image(path, lama)
+            if process_image(path, lama):
+                path.rename(PROCESSED_DIR / path.name)
 
     observer = Observer()
     observer.schedule(ImageHandler(), str(INPUT_DIR), recursive=False)
@@ -159,6 +164,7 @@ def main():
 
     INPUT_DIR.mkdir(exist_ok=True)
     OUTPUT_DIR.mkdir(exist_ok=True)
+    PROCESSED_DIR.mkdir(exist_ok=True)
 
     if args.watch:
         watch_mode()

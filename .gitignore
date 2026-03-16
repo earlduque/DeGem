@@ -1,4 +1,6 @@
 input/*
 output/*
+processed/*
 !input/.gitkeep
 !output/.gitkeep
+!processed/.gitkeep

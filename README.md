@@ -48,7 +48,8 @@ That's it. The LaMa AI model (~200MB) will download automatically the first time
 python degem.py
 ```
 
-3. Cleaned images will appear in the `output/` folder with `_clean` added to the filename (e.g. `image.png` → `image_clean.png`)
+3. Cleaned images appear in `output/` with `_clean` added to the filename (e.g. `image.png` → `image_clean.png`)
+4. Successfully processed originals are moved to `processed/` to keep your input folder clean
 
 ---
 
@@ -60,7 +61,7 @@ Start the watcher:
 python degem.py --watch
 ```
 
-Now any image you drop into the `input/` folder will be automatically processed and saved to `output/`. Press `Ctrl+C` to stop.
+Now any image you drop into the `input/` folder will be automatically processed, saved to `output/`, and the original moved to `processed/`. Press `Ctrl+C` to stop.
 
 ---
 
@@ -84,6 +85,7 @@ Found 3 image(s) to process.
   Saved -> output\photo3_clean.webp
 
 Done. 3/3 images saved to output/
+Originals moved to processed/
 ```
 
 ## Troubleshooting
@@ -102,8 +104,8 @@ This can happen with very complex backgrounds (e.g. fine text or detailed patter
 
 ## Notes
 
-- Original images in `input/` are never modified
-- The `input/` and `output/` folder contents are gitignored — your images won't be committed if you fork this repo
+- Original images are moved to `processed/` after successful processing — if something goes wrong, the original stays in `input/`
+- The `input/`, `output/`, and `processed/` folder contents are gitignored — your images won't be committed if you fork this repo
 - The LaMa model is cached after the first download at `~/.cache/torch/hub/checkpoints/big-lama.pt`
 
 ## License
